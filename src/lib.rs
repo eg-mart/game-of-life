@@ -4,7 +4,7 @@ pub struct Board {
     content: Vec<Vec<bool>>,
 }
 
- pub struct Cell {
+pub struct Cell {
     pub x: usize,
     pub y: usize,
 }
@@ -30,7 +30,7 @@ impl Board {
 
     pub fn calculate_next_state(&mut self) {
         let old_content = self.content.clone();
-        for y in 0..self.height{
+        for y in 0..self.height {
             for x in 0..self.width {
                 let mut neighbors_cnt: u8 = 0;
                 for offset_y in -1..=1 {
@@ -39,8 +39,10 @@ impl Board {
                             continue;
                         }
 
-                        let neighbor_x = (x as i32 + offset_x).rem_euclid(self.width as i32) as usize;
-                        let neighbor_y = (y as i32 + offset_y).rem_euclid(self.height as i32) as usize;
+                        let neighbor_x =
+                            (x as i32 + offset_x).rem_euclid(self.width as i32) as usize;
+                        let neighbor_y =
+                            (y as i32 + offset_y).rem_euclid(self.height as i32) as usize;
 
                         if old_content[neighbor_y][neighbor_x] {
                             neighbors_cnt += 1;
@@ -50,8 +52,7 @@ impl Board {
 
                 if neighbors_cnt == 3 {
                     self.content[y][x] = true;
-                }
-                else if neighbors_cnt >= 4 || neighbors_cnt <= 1 {
+                } else if neighbors_cnt >= 4 || neighbors_cnt <= 1 {
                     self.content[y][x] = false;
                 }
             }
